@@ -32,11 +32,6 @@
       "static/chunks/main.js",
       "static/chunks/pages/courses.js"
     ],
-    "/courses/[id]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/courses/[id].js"
-    ],
     "/dashboard": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
@@ -46,11 +41,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/leaderboard.js"
-    ],
-    "/learning-paths": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/learning-paths.js"
     ],
     "/profile": [
       "static/chunks/webpack.js",
