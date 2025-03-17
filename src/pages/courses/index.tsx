@@ -1,11 +1,29 @@
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import { useSession, getSession } from 'next-auth/react';
 import Navigation from '@/components/Navigation';
 import CourseCard from '@/components/courses/CourseCard';
 import Link from 'next/link';
 import { Course } from '@/types';
 import SEO from '@/components/SEO';
 import { withAuth } from '@/components/withAuth';
+import { GetServerSideProps } from 'next';
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/auth/signin',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session }
+  };
+};
 
 function CoursesPage() {
   const { data: session } = useSession();

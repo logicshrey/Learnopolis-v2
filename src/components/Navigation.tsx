@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSession, signOut } from 'next-auth/react';
@@ -24,21 +24,6 @@ export default function Navigation() {
     }
     return currentPath.startsWith(href);
   };
-
-  useEffect(() => {
-    const protectedRoutes = ['/courses', '/profile', '/learning-paths', '/challenges', '/dashboard'];
-    const isProtectedRoute = protectedRoutes.some(route => router.pathname.startsWith(route));
-
-    if (status === 'loading') return;
-
-    if (!session && isProtectedRoute) {
-      router.push('/auth/signin');
-    }
-
-    if (session && (router.pathname === '/auth/signin' || router.pathname === '/auth/signup')) {
-      router.push('/');
-    }
-  }, [session, status, router.pathname]);
 
   return (
     <nav className="bg-white dark:bg-gray-800 shadow-sm transition-colors duration-200">

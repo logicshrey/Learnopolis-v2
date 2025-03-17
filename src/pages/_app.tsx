@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
 import Head from 'next/head';
 import { ToastProvider } from '../context/ToastContext';
-import { ThemeProvider } from '../context/ThemeContext';
+import { ThemeProvider } from '@/context/ThemeContext';
 import Feedback from '@/components/Feedback';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
