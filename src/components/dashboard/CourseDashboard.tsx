@@ -1,7 +1,7 @@
 import React from 'react';
 import { Course } from '@/types';
 import CourseCard from './CourseCard';
-import ProgressChart from './ProgressChart';
+import { ProgressChart } from './ProgressChart';
 
 interface CourseDashboardProps {
   courses: Course[];

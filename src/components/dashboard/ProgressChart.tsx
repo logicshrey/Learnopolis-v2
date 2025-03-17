@@ -8,17 +8,20 @@ import {
 } from 'recharts';
 
 interface ProgressChartProps {
-  data: {
-    subject: string;
-    score: number;
-  }[];
+  progress: {
+    // Define the shape of your progress data here
+    // For example:
+    completed: number;
+    total: number;
+    // ... other progress properties
+  };
 }
 
-export default function ProgressChart({ data }: ProgressChartProps) {
+const ProgressChart: React.FC<ProgressChartProps> = ({ progress }) => {
   return (
     <div className="h-64">
       <ResponsiveContainer width="100%" height="100%">
-        <RadarChart data={data}>
+        <RadarChart data={progress}>
           <PolarGrid />
           <PolarAngleAxis dataKey="subject" />
           <Radar
@@ -32,4 +35,6 @@ export default function ProgressChart({ data }: ProgressChartProps) {
       </ResponsiveContainer>
     </div>
   );
-} 
+};
+
+export default ProgressChart; 
