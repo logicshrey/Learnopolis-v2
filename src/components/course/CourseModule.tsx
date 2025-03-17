@@ -4,7 +4,7 @@ import QuizInterface from '../quiz/QuizInterface';
 
 interface CourseModuleProps {
   module: Module;
-  onComplete: (moduleId: string) => void;
+  onComplete: (moduleId: string | number) => void;
 }
 
 const CourseModule: React.FC<CourseModuleProps> = ({ module, onComplete }) => {
@@ -14,7 +14,7 @@ const CourseModule: React.FC<CourseModuleProps> = ({ module, onComplete }) => {
   const handleQuizComplete = (score: number) => {
     if (score >= 70) {
       setIsCompleted(true);
-      onComplete(module.id);
+      onComplete(module.id.toString());
     }
   };
 
