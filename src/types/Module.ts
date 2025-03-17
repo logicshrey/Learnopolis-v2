@@ -1,4 +1,4 @@
-interface Challenge {
+export interface Challenge {
   id: string | number;
   title: string;
   // ... other challenge properties
