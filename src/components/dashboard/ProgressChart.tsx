@@ -9,26 +9,38 @@ import {
 
 interface ProgressChartProps {
   progress: {
-    // Define the shape of your progress data here
-    // For example:
     completed: number;
     total: number;
-    // ... other progress properties
   };
 }
 
 const ProgressChart: React.FC<ProgressChartProps> = ({ progress }) => {
+  // Convert the progress object into the array format that RadarChart expects
+  const chartData = [
+    {
+      subject: 'Completed',
+      value: progress.completed,
+      fullMark: progress.total
+    },
+    {
+      subject: 'In Progress',
+      value: progress.total - progress.completed,
+      fullMark: progress.total
+    }
+    // Add more metrics as needed
+  ];
+
   return (
     <div className="h-64">
       <ResponsiveContainer width="100%" height="100%">
-        <RadarChart data={progress}>
+        <RadarChart data={chartData}>
           <PolarGrid />
           <PolarAngleAxis dataKey="subject" />
           <Radar
             name="Progress"
-            dataKey="score"
-            stroke="#4f46e5"
-            fill="#4f46e5"
+            dataKey="value"
+            stroke="#8884d8"
+            fill="#8884d8"
             fillOpacity={0.6}
           />
         </RadarChart>
