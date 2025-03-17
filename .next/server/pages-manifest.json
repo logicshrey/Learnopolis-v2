@@ -3,13 +3,10 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
-  "/leaderboard": "pages/leaderboard.js",
-  "/api/leaderboard": "pages/api/leaderboard.js",
-  "/dashboard": "pages/dashboard.js",
-  "/api/courses/progress": "pages/api/courses/progress.js",
   "/api/ai/recommendations": "pages/api/ai/recommendations.js",
-  "/api/ai/learning-paths": "pages/api/ai/learning-paths.js",
+  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
+  "/api/courses/progress": "pages/api/courses/progress.js",
+  "/dashboard": "pages/dashboard.js",
   "/api/courses/count": "pages/api/courses/count.js",
-  "/api/videos": "pages/api/videos.js"
+  "/leaderboard": "pages/leaderboard.js"
 }

@@ -29,11 +29,16 @@ export class RecommendationEngine {
     
     // Process user progress data
     user.progress.forEach((progress) => {
-      const courseId = typeof progress.courseId === 'string' 
-        ? progress.courseId 
-        : progress.courseId._id.toString();
+      let courseId = '';
+      if (typeof progress.courseId === 'string') {
+        courseId = progress.courseId;
+      } else if (progress.courseId && progress.courseId._id) {
+        courseId = progress.courseId._id.toString();
+      }
       
-      enrolledCourseIds.push(courseId);
+      if (courseId) {
+        enrolledCourseIds.push(courseId);
+      }
       
       if (progress.completed) {
         completedCourseIds.push(courseId);
