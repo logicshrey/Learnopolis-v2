@@ -1,0 +1,19 @@
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/api/ai/learning-paths": "pages/api/ai/learning-paths.js",
+  "/api/videos": "pages/api/videos.js",
+  "/courses": "pages/courses.js",
+  "/api/courses": "pages/api/courses.js",
+  "/videos": "pages/videos.js",
+  "/api/videos/completed": "pages/api/videos/completed.js",
+  "/learning-paths": "pages/learning-paths.js",
+  "/leaderboard": "pages/leaderboard.js",
+  "/": "pages/index.js",
+  "/api/leaderboard": "pages/api/leaderboard.js",
+  "/profile": "pages/profile.js",
+  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
+  "/api/user/profile": "pages/api/user/profile.js",
+  "/api/feedback": "pages/api/feedback.js"
+}
