@@ -1,3 +1,5 @@
+import { Quiz } from './Quiz';
+
 export interface Challenge {
   id: string | number;
   title: string;
@@ -11,4 +13,11 @@ export interface Module {
   points: number;
   quizzes: Quiz[];
   challenges: Challenge[];
+}
+
+export interface Quiz {
+  id: string | number;
+  title: string;
+  questions: any[];
+  timeLimit: number;
 } 

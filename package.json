@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3001",
-    "build": "next build",
+    "build": "npm run type-check && next build",
     "start": "next start -p 3001",
     "lint": "next lint",
     "seed": "ts-node src/scripts/seed.ts",
-    "seed:videos": "node scripts/seed-videos.js"
+    "seed:videos": "node scripts/seed-videos.js",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@tensorflow/tfjs": "^4.22.0",

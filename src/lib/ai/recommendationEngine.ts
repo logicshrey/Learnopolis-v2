@@ -1,5 +1,3 @@
-import { Course, User, UserProgress } from '@/types';
-
 interface UserProfile {
   // Subject preferences based on enrollment and completion
   subjectPreferences: Map<string, number>;
@@ -14,10 +12,32 @@ interface UserProfile {
   enrolledCourseIds: string[];
 }
 
+interface CourseData {
+  _id: string;
+  subjects: string[];
+  difficulty: string;
+  modules: any[];  // Define proper Module type if available
+  enrollmentCount: number;
+}
+
+interface UserProgress {
+  courseId: string | CourseData;
+  completed: boolean;
+  completedModules: string[];
+  quizScores: Record<string, number>;
+}
+
+interface User {
+  progress: UserProgress[];
+  level: number;
+}
+
 interface Course {
   id?: string;
   _id?: string;
-  // ... other course properties
+  subjects: string[];
+  difficulty: string;
+  enrollmentCount: number;
 }
 
 export class RecommendationEngine {
@@ -111,7 +131,7 @@ export class RecommendationEngine {
     score += Math.min(subjectScore, 5); // Cap at 5 points
     
     // Difficulty appropriateness score (0-3)
-    const difficultyMap = { 'beginner': 1, 'intermediate': 2, 'advanced': 3 };
+    const difficultyMap: Record<string, number> = { 'beginner': 1, 'intermediate': 2, 'advanced': 3 };
     const courseDifficulty = difficultyMap[course.difficulty] || 2;
     const userLevelNormalized = Math.ceil(userProfile.userLevel / 2); // Convert user level to 1-3 scale
     

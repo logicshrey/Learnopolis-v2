@@ -26,6 +26,6 @@ export default async function handler(
     res.status(200).json({ message: 'User index fixed successfully' });
   } catch (error) {
     console.error('Error fixing user index:', error);
-    res.status(500).json({ message: 'Error fixing user index', error: error.message });
+    res.status(500).json({ message: 'Error fixing user index', error: (error as Error).message });
   }
 } 

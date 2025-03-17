@@ -2,7 +2,11 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
+  "/dashboard": "pages/dashboard.js",
   "/leaderboard": "pages/leaderboard.js",
-  "/dashboard": "pages/dashboard.js"
+  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
+  "/": "pages/index.js",
+  "/api/ai/recommendations": "pages/api/ai/recommendations.js",
+  "/api/courses/progress": "pages/api/courses/progress.js",
+  "/api/courses/count": "pages/api/courses/count.js"
 }
