@@ -11,4 +11,5 @@ export interface Quiz {
   description?: string;
   questions: Question[];
   moduleId?: string | number;
+  timeLimit: number;
 } 
