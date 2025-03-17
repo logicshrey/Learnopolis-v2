@@ -4,6 +4,11 @@ import { authOptions } from '../auth/[...nextauth]';
 import { connectDB } from '@/lib/db';
 import User from '@/models/User';
 
+interface UserProgress {
+  completed: boolean;
+  quizScores: number[];
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -30,17 +35,17 @@ export default async function handler(
 
     // Calculate stats
     const enrolledCourses = user.progress?.length || 0;
-    const completedCourses = user.progress?.filter(p => p.completed)?.length || 0;
+    const completedCourses = user.progress?.filter((p: UserProgress) => p.completed)?.length || 0;
     
     // Calculate quizzes taken and average score
     let quizzesTaken = 0;
     let totalScore = 0;
     
     if (user.progress && Array.isArray(user.progress)) {
-      user.progress.forEach(progress => {
-        if (progress.quizScores && Array.isArray(progress.quizScores) && progress.quizScores.length > 0) {
+      user.progress.forEach((progress: UserProgress) => {
+        if (progress.quizScores && progress.quizScores.length > 0) {
           quizzesTaken += progress.quizScores.length;
-          totalScore += progress.quizScores.reduce((sum, score) => sum + score, 0);
+          totalScore += progress.quizScores.reduce((sum: number, score: number) => sum + score, 0);
         }
       });
     }

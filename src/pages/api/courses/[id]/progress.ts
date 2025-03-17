@@ -6,6 +6,11 @@ import User from '@/models/User';
 import Course from '@/models/Course';
 import mongoose from 'mongoose';
 
+interface CourseProgress {
+  courseId: string;
+  completed: boolean;
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -31,7 +36,7 @@ export default async function handler(
 
     // Find the user's progress for this course
     const courseProgress = user.progress.find(
-      (p) => p.courseId && p.courseId.toString() === id
+      (p: CourseProgress) => p.courseId && p.courseId.toString() === id
     );
 
     if (!courseProgress) {

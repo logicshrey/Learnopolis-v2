@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import Navigation from '@/components/Navigation';
 import ModuleList from '@/components/courses/ModuleList';
-import ModuleContent from '@/components/courses/ModuleContent';
+import { ModuleContent } from '@/components/courses/ModuleContent';
 import CourseProgress from '@/components/courses/CourseProgress';
 import StudyBuddy from '@/components/ai/StudyBuddy';
 import { Course, Module } from '@/types';
@@ -76,20 +76,22 @@ export default function CourseDetail() {
     }
   };
 
-  const handleModuleComplete = async (moduleId: number, score: number) => {
+  const handleModuleComplete = async (moduleId: string, score: number) => {
     if (!session || !session.user?.id) {
       router.push('/auth/signin');
       return;
     }
 
     try {
+      const moduleIndex = parseInt(moduleId, 10);
+      
       const res = await fetch(`/api/courses/${id}/progress`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          moduleId,
+          moduleId: moduleIndex,
           score
         }),
       });
@@ -112,7 +114,7 @@ export default function CourseDetail() {
         setCurrentModuleIndex(currentModuleIndex + 1);
       }
     } catch (error) {
-      console.error('Error updating progress:', error);
+      console.error('Error updating module progress:', error);
       alert('Failed to update progress. Please try again.');
     }
   };

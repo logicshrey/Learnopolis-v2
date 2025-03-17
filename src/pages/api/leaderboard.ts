@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { connectDB } from '@/lib/db';
 import User from '@/models/User';
+import { UserProgress } from '@/types';
 
 export default async function handler(
   req: NextApiRequest,
@@ -37,7 +38,7 @@ export default async function handler(
     // Format user data for leaderboard
     const formattedUsers = users.map(user => {
       // Count completed courses
-      const completedCourses = user.progress.filter(p => p.completed).length;
+      const completedCourses = user.progress.filter((p: UserProgress) => p.completed).length;
       
       return {
         _id: user._id,

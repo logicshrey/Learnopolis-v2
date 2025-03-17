@@ -1,15 +1,12 @@
-export interface Question {
-  id: string | number;
-  question: string;
-  options: string[];
-  correctAnswer: string;
+export interface Quiz {
+  id: string;
+  title: string;
+  questions: QuizQuestion[];
+  timeLimit: number;
 }
 
-export interface Quiz {
-  id: string | number;
-  title: string;
-  description?: string;
-  questions: Question[];
-  moduleId?: string | number;
-  timeLimit: number;
+export interface QuizQuestion {
+  question: string;
+  options: string[];
+  correctAnswer: number;
 } 

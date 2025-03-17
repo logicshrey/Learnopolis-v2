@@ -1,5 +1,7 @@
+import { Quiz, QuizQuestion } from './Quiz';
+
 export interface User {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   image?: string;
@@ -11,36 +13,35 @@ export interface User {
 }
 
 export interface Course {
-  id: string;
-  _id?: string;
+  _id: string;
+  id?: string;
   title: string;
   description: string;
-  difficulty: 'beginner' | 'intermediate' | 'advanced';
   subjects: string[];
-  modules: Module[];
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
   enrollmentCount: number;
-  createdAt?: Date;
-  averageRating?: number;
+  modules: Module[];
 }
 
 export interface Module {
-  id: number;
+  id: string;
   title: string;
   content: string;
-  quiz: QuizQuestion[];
-}
-
-export interface QuizQuestion {
-  question: string;
-  options: string[];
-  correctAnswer: number;
+  quizzes: Quiz[];
+  quiz?: Quiz;
 }
 
 export interface UserProgress {
-  courseId: string | Course;
-  completedModules: number[];
-  quizScores: Record<string, number>;
+  courseId: Course | string;
   completed: boolean;
+  quizScores: number[] | Record<string, number>;
+  completedModules: string[] | number[];
+}
+
+export interface Progress {
+  courseId: string;
+  completed: boolean;
+  quizScores: number[];
 }
 
 export interface Achievement {

@@ -4,6 +4,16 @@ import { connectDB } from '@/lib/db';
 import User from '@/models/User';
 import DailyChallenge from '@/models/DailyChallenge';
 
+interface Challenge {
+  _id: string;
+  // ... other properties
+}
+
+interface UserChallenge {
+  challengeId: string;
+  // ... other properties
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -45,7 +55,7 @@ export default async function handler(
       // Get user's progress
       const user = await User.findById(session.user.id);
       const progress = user.dailyChallenges.find(
-        c => c.challengeId.toString() === challenge._id.toString()
+        (c: UserChallenge) => c.challengeId.toString() === challenge._id.toString()
       );
 
       res.status(200).json({

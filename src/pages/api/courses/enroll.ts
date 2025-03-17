@@ -5,6 +5,7 @@ import { connectDB } from '@/lib/db';
 import User from '@/models/User';
 import Course from '@/models/Course';
 import mongoose from 'mongoose';
+import { UserProgress } from '@/types';
 
 export default async function handler(
   req: NextApiRequest,
@@ -41,11 +42,11 @@ export default async function handler(
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const alreadyEnrolled = user.progress.some(
-      (p) => p.courseId && p.courseId.toString() === courseId
+    const existingEnrollment = user.progress.find((p: UserProgress) => 
+      p.courseId && p.courseId.toString() === courseId
     );
 
-    if (alreadyEnrolled) {
+    if (existingEnrollment) {
       return res.status(400).json({ message: 'Already enrolled in this course' });
     }
 

@@ -9,6 +9,11 @@ interface Progress {
   quizScores: number[];
 }
 
+interface UserProgress extends Progress {
+  courseId: string;
+  completedModules: string[];
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -43,16 +48,16 @@ export default async function handler(
     );
 
     // Get course progress
-    const courseProgress = await Promise.all(
-      user.progress.map(async (p) => {
-        const course = await Course.findById(p.courseId);
-        return {
-          title: course.title,
-          progress: (p.completedModules.length / course.modules.length) * 100,
-          completed: p.completed
-        };
-      })
-    );
+    const progressPromises = user.progress.map(async (p: UserProgress) => {
+      const course = await Course.findById(p.courseId);
+      return {
+        title: course.title,
+        progress: (p.completedModules.length / course.modules.length) * 100,
+        completed: p.completed
+      };
+    });
+
+    const courseProgress = await Promise.all(progressPromises);
 
     res.status(200).json({
       totalPoints,

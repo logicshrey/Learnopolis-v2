@@ -4,23 +4,21 @@ import Quiz from '@/components/quiz/Quiz';
 
 interface ModuleContentProps {
   module: Module;
-  onComplete: (moduleIndex: number, score: number) => void;
+  onComplete: (moduleId: string, score: number) => void;
   isCompleted: boolean;
   quizScore?: number;
 }
 
-export default function ModuleContent({ 
-  module, 
-  onComplete, 
-  isCompleted,
-  quizScore
-}: ModuleContentProps) {
+export const ModuleContent: React.FC<ModuleContentProps> = ({ module, onComplete, isCompleted, quizScore }) => {
   const [showQuiz, setShowQuiz] = useState(false);
 
   const handleQuizComplete = (score: number) => {
-    onComplete(module.id, score);
+    onComplete(module.id.toString(), score);
     setShowQuiz(false);
   };
+
+  // Use module.quiz instead of module.quizzes[0] if that's how your data is structured
+  const questions = module.quiz?.questions || module.quizzes[0]?.questions || [];
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
@@ -55,12 +53,12 @@ export default function ModuleContent({
       {showQuiz && (
         <div className="mt-8">
           <h3 className="text-xl font-bold mb-4">Module Quiz</h3>
-          <Quiz 
-            questions={module.quiz} 
+          <Quiz
+            questions={questions}
             onComplete={handleQuizComplete}
           />
         </div>
       )}
     </div>
   );
-} 
+}; 
