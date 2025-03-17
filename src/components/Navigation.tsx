@@ -26,8 +26,15 @@ export default function Navigation() {
   };
 
   useEffect(() => {
+    const protectedRoutes = ['/courses', '/profile', '/learning-paths', '/challenges', '/dashboard'];
+    const isProtectedRoute = protectedRoutes.some(route => router.pathname.startsWith(route));
+
     if (status === 'loading') return;
-    
+
+    if (!session && isProtectedRoute) {
+      router.push('/auth/signin');
+    }
+
     if (session && (router.pathname === '/auth/signin' || router.pathname === '/auth/signup')) {
       router.push('/');
     }

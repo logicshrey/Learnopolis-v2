@@ -5,8 +5,9 @@ import CourseCard from '@/components/courses/CourseCard';
 import Link from 'next/link';
 import { Course } from '@/types';
 import SEO from '@/components/SEO';
+import { withAuth } from '@/components/withAuth';
 
-export default function Courses() {
+function CoursesPage() {
   const { data: session } = useSession();
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
@@ -154,4 +155,6 @@ export default function Courses() {
       </div>
     </>
   );
-} 
+}
+
+export default withAuth(CoursesPage); 

@@ -55,7 +55,7 @@ export const authOptions: NextAuthOptions = {
     })
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, account }) {
       if (user) {
         token.id = user.id;
         token.level = user.level;
@@ -64,10 +64,10 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id;
-        session.user.level = token.level;
-        session.user.points = token.points;
+      if (token && session.user) {
+        session.user.id = token.id as string;
+        session.user.level = token.level as number;
+        session.user.points = token.points as number;
       }
       return session;
     }
