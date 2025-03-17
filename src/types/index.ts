@@ -49,4 +49,8 @@ export interface Achievement {
   description: string;
   icon: string;
   unlockedAt: Date;
-} 
+}
+
+export * from './User';
+export * from './Quiz';
+// ... export other types 
