@@ -2,17 +2,18 @@ import bcrypt from 'bcryptjs';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { connectDB } from '@/lib/db';
 import User from '@/models/User';
+import { UserData, ApiError } from '@/types/api';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<{ user: UserData } | ApiError>
 ) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
   try {
-    const { name, email, password } = req.body;
+    const { username, name, email, password } = req.body;
 
     if (!email || !password) {
       return res.status(400).json({ message: 'Missing required fields' });
@@ -37,8 +38,8 @@ export default async function handler(
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    // Create user document without saving yet
-    const userData = {
+    const userData: UserData = {
+      username,
       name,
       email,
       password: hashedPassword,
@@ -59,21 +60,11 @@ export default async function handler(
     // Create and save the user
     const user = await User.create(userData);
 
-    res.status(201).json({ message: 'User created successfully' });
+    return res.status(201).json({ user });
   } catch (error) {
-    console.error('Signup error:', error);
-    
-    // Provide more specific error messages
-    if (error.code === 11000) {
-      if (error.keyPattern?.email) {
-        return res.status(400).json({ message: 'Email already in use' });
-      }
-      if (error.keyPattern?.username) {
-        return res.status(400).json({ message: 'Username already taken' });
-      }
-      return res.status(400).json({ message: 'Duplicate key error' });
+    if (error instanceof Error) {
+      return res.status(500).json({ message: error.message });
     }
-    
-    res.status(500).json({ message: 'Error creating user' });
+    return res.status(500).json({ message: 'An unexpected error occurred' });
   }
 } 

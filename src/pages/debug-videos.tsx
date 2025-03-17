@@ -4,7 +4,7 @@ import Navigation from '@/components/Navigation';
 export default function DebugVideos() {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchVideos() {

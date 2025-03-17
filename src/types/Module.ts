@@ -1,4 +1,4 @@
-import { Quiz } from './Quiz';
+import { Quiz as QuizType } from './Quiz';
 
 export interface Challenge {
   id: string | number;
@@ -11,7 +11,7 @@ export interface Module {
   title: string;
   content: string;
   points: number;
-  quizzes: Quiz[];
+  quizzes: QuizType[];
   challenges: Challenge[];
 }
 

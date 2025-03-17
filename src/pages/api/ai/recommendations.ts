@@ -6,6 +6,24 @@ import User from '@/models/User';
 import Course from '@/models/Course';
 import { RecommendationEngine } from '@/lib/ai/recommendationEngine';
 
+interface Progress {
+  subject: string;
+  score: number;
+}
+
+interface UserProgress {
+  courseId: any;  // Replace 'any' with proper type from your model
+  completed: boolean;
+  quizScores: number[];
+}
+
+function calculateWeakSubjects(progress: Progress[]): string[] {
+  return progress
+    .sort((a, b) => a.score - b.score)
+    .map(subject => subject.subject)
+    .slice(0, 3);
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -47,10 +65,10 @@ export default async function handler(
       } else {
         // Find matching subjects with user's enrolled courses
         const userSubjects = new Set();
-        user.progress.forEach(progress => {
+        user.progress.forEach((progress: UserProgress) => {
           const courseData = typeof progress.courseId === 'object' ? progress.courseId : null;
           if (courseData && courseData.subjects) {
-            courseData.subjects.forEach(subject => userSubjects.add(subject));
+            courseData.subjects.forEach((subject: string) => userSubjects.add(subject));
           }
         });
         

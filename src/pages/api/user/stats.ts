@@ -4,6 +4,11 @@ import { connectDB } from '@/lib/db';
 import User from '@/models/User';
 import Course from '@/models/Course';
 
+interface Progress {
+  completed: boolean;
+  quizScores: number[];
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -21,15 +26,13 @@ export default async function handler(
 
     // Calculate user stats
     const totalPoints = user.points;
-    const coursesCompleted = user.progress.filter(p => p.completed).length;
+    const coursesCompleted = user.progress.filter((p: Progress) => p.completed).length;
     const currentStreak = user.streak;
 
     // Calculate average quiz score
-    const allScores = user.progress.flatMap(p => 
-      Object.values(p.quizScores)
-    );
+    const allScores = user.progress.flatMap((p: Progress) => p.quizScores);
     const averageScore = allScores.length > 0
-      ? allScores.reduce((a, b) => a + b, 0) / allScores.length
+      ? allScores.reduce((a: number, b: number) => a + b, 0) / allScores.length
       : 0;
 
     // Calculate level progress

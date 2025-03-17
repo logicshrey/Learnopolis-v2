@@ -1,6 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  webpack: (config) => {
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      bcryptjs: require.resolve('bcryptjs'),
+    };
+    return config;
+  },
   // Other Next.js config options
 }
 
