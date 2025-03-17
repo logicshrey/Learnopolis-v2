@@ -8,7 +8,7 @@ interface QuizInterfaceProps {
 
 const QuizInterface: React.FC<QuizInterfaceProps> = ({ quiz, onComplete }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
+  const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
   const [timeLeft, setTimeLeft] = useState(quiz.timeLimit);
   const [isComplete, setIsComplete] = useState(false);
 
@@ -23,7 +23,7 @@ const QuizInterface: React.FC<QuizInterfaceProps> = ({ quiz, onComplete }) => {
 
   const handleAnswerSelect = (answerIndex: number) => {
     const newAnswers = [...selectedAnswers];
-    newAnswers[currentQuestion] = answerIndex;
+    newAnswers[currentQuestion] = answerIndex.toString();
     setSelectedAnswers(newAnswers);
   };
 
@@ -69,7 +69,7 @@ const QuizInterface: React.FC<QuizInterfaceProps> = ({ quiz, onComplete }) => {
                 <button
                   key={index}
                   className={`w-full p-3 text-left rounded-lg border ${
-                    selectedAnswers[currentQuestion] === index
+                    selectedAnswers[currentQuestion] === index.toString()
                       ? 'border-indigo-600 bg-indigo-50'
                       : 'border-gray-300 hover:border-indigo-300'
                   }`}
