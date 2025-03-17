@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSession, signOut } from 'next-auth/react';
 import { useTheme } from '@/context/ThemeContext';
 
 export default function Navigation() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
@@ -24,6 +24,14 @@ export default function Navigation() {
     }
     return currentPath.startsWith(href);
   };
+
+  useEffect(() => {
+    if (status === 'loading') return;
+    
+    if (session && (router.pathname === '/auth/signin' || router.pathname === '/auth/signup')) {
+      router.push('/');
+    }
+  }, [session, status, router.pathname]);
 
   return (
     <nav className="bg-white dark:bg-gray-800 shadow-sm transition-colors duration-200">

@@ -12,24 +12,24 @@ export default function SignIn() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       setIsLoading(true);
       setError('');
 
       const result = await signIn('credentials', {
-        redirect: false,
         email: formData.email,
         password: formData.password,
+        redirect: false
       });
 
-      if (result?.error) {
-        setError(result.error);
+      if (result?.ok) {
+        // Successful login
+        router.push('/');
       } else {
-        // Redirect to dashboard or callback URL
-        const callbackUrl = router.query.callbackUrl as string || '/dashboard';
-        router.push(callbackUrl);
+        // Handle error
+        setError(result?.error || 'Login failed');
       }
     } catch (error: any) {
       setError(error.message);
