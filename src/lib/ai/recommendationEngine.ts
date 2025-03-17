@@ -14,6 +14,12 @@ interface UserProfile {
   enrolledCourseIds: string[];
 }
 
+interface Course {
+  id?: string;
+  _id?: string;
+  // ... other course properties
+}
+
 export class RecommendationEngine {
   // Build a comprehensive user profile based on their activity
   private buildUserProfile(user: User): UserProfile {
@@ -156,6 +162,7 @@ export class RecommendationEngine {
     // Filter out courses the user is already enrolled in
     const unenrolledCourses = availableCourses.filter(course => {
       const courseId = course.id || course._id;
+      if (!courseId) return true; // Include courses without IDs or handle differently
       return !userProfile.enrolledCourseIds.includes(courseId.toString());
     });
     
